@@ -84,13 +84,15 @@ public:
 	}
 };
 
-
+//Scanner类利用状态机原理，实现词法分析，生成Token
 class Scanner {
 
 	Storage *storage;
 
+    //Token生成
 	token getResult(const std::string &, int);
 
+    //状态判断
 	bool isDigital(char);
 	bool isString(char);
 	bool isDelimiter(char);
@@ -102,13 +104,15 @@ class Scanner {
 	bool isAnotationEnd(const std::string &);
 	bool isReserveWord(const std::string &);
 
+    //状态处理
 	token identifier(const std::string &, size_t &);
 	token delimiter(const std::string &, size_t &, unsigned);
 	token integer(const std::string &, size_t &, unsigned);
 	token string(const std::string &, size_t &, unsigned);
 
 public:
-
 	Scanner(Storage *storage) :storage(storage) {}
+    //传入待分析的字符串及位置，每读取一个单词返回
+    //为了更好地显示报错信息，需要传入字符串在代码文本中的行号
 	token scan(const std::string &, size_t &, unsigned);
 };

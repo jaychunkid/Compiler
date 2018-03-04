@@ -64,21 +64,30 @@ public:
 	}
 };
 
-
+//Parser类利用带回溯的自顶向下方法，实现语法分析
+//在进行语法分析的同时进行中间代码生成，生成四元式结果
 class Parser {
 
 	Storage *storage;
+    //生成的中间代码串
 	std::vector<quaternary> IntermediateCode;
+    //词法分析获得的Token串
 	std::vector<token> Tokens;
+    //记录文本代码中每行对应的第一个Token位置
+    //为抛出异常时填写错误信息服务
 	std::vector<unsigned> rowMark;
 
 	unsigned getRow(size_t);
 
+    //四元式生成
 	unsigned gen(const std::string &, 
 		int, int, int);
+
+    //四元式代码链合并、回填
 	void backpatch(unsigned, unsigned);
 	unsigned merge(unsigned, unsigned);
 
+    //判断下一个Token是否为对应非终结符
 	bool isType(size_t);
 	bool isBoolType(size_t);
 	bool isIntType(size_t);
@@ -93,6 +102,8 @@ class Parser {
 	bool isCompoundStatement(size_t);
 	bool isStatement(size_t);
 
+    //每个非终结符对应一个处理函数
+    //根据表达式生成四元式
 	bool program(size_t &);
 	bool variableDefinition(size_t &);
 	bool identifierTable(size_t &, unsigned &);
@@ -115,9 +126,10 @@ class Parser {
 	bool booleanUnit(size_t &, unsigned &, unsigned &);
 
 public:
-
 	Parser(Storage *storage) :storage(storage) {}
+    //对输入的文件进行词法分析和语法分析，生成四元式代码
 	void parse(std::ifstream &);
+    //输出生成的四元式代码
 	void printIntermediateCode(std::ostream &);
 
 };

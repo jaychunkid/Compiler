@@ -9,6 +9,9 @@ struct ide {
 	bool is_declare = false;
 };
 
+//Storage类存储程序编译过程中的符号表
+//词法分析过程向符号表添加符号
+//语法分析过程为符号设置类型等信息
 class Storage {
 
 	std::vector<ide> Identifers;

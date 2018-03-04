@@ -11,9 +11,8 @@
 #define FIRST_RESERVE_WORD 1
 #define LAST_RESERVE_WORD 35
 
-
+//Data类，存放单词编码表、字符集、单词集信息
 class Data {
-
 	const static std::vector<std::string> coding_schedule;
 
 public:
